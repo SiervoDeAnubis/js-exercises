@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS - 02 - Clock (canvas)</title>
+  <style>
+    html {
+      font-size: 10px;
+      background: url('./background.jpg');
+      background-size: cover;
+      text-align: center;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      margin: 0 auto;
+      width: 650px;
+      height: 650px;
+    }
+
+    .hours,
+    .minutes,
+    .seconds {
+      transform-origin: center;
+      stroke-linecap: round;
+    }
+    .hours {
+      stroke: fuchsia;
+      stroke-width: 3px;
+      transition: transform 1s ease-in-out;
+    }
+    .minutes {
+      stroke-width: 2px;
+      stroke: lime;
+      transition: transform 1s ease-in-out;
+    }
+    .seconds {
+      stroke: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <svg
+      class="circle"
+      viewBox="0 0 120 120"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="60" cy="60" r="60" fill="#fabada"`/>
+      <line x1="60" y1="0" x2="60" y2="60" class="hours" />
+      <line x1="60" y1="0" x2="60" y2="60" class="minutes" />
+      <line x1="60" y1="0" x2="60" y2="60" class="seconds" />
+    </svg>
+  </div>
+  <script>
+    const linearMap = (value, min, max, newMin, newMax) => newMin + ((newMax - newMin) * (value - min)) / (max - min);
+
+    const getSeconds = () => {
+      const date = new Date();
+      const getSecond = date.getSeconds()
+      const angle = linearMap(getSecond,0,60,0,360);
+      document.querySelector(".seconds").style.transform = `rotate(${angle}deg)`
+    }
+
+    const getMinutes = () => {
+      const date = new Date();
+      const getSecond = date.getMinutes()
+      const angle = linearMap(getSecond,0,60,0,360);
+      document.querySelector(".minutes").style.transform = `rotate(${angle}deg)`
+    }
+
+    const getHours = () => {
+      const date = new Date();
+      const getSecond = date.getHours() - 12;
+      const angle = linearMap(getSecond,0,12,0,360);
+      document.querySelector(".hours").style.transform = `rotate(${angle}deg)`
+    }
+
+    (() => {
+      setInterval(() => {
+        getSeconds()
+        getMinutes()
+        getHours();
+      }, 1000)
+    })();
+
+
+  </script>
+</body>
+</html>
