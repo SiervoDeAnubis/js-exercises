@@ -1,26 +1,23 @@
-const maxSuma = (arr, w, arr_length) => {
-  let max_suma = 0;
+const maxSum = (arr, window, length) => {
+  let max = 0;
+  let winAdd = 0;
+  let start = 0;
 
-  for (let i = 0; i < w; i++) {
-    max_suma += arr[i]
-  }
-  
-  console.log(" ----- ", max_suma);
-  let window_add = max_suma;
-  for (let i = w; i < arr_length; i++) {
-    console.log(`arr ${i} ${w}`, arr[i-w]);
-    console.log('arr nor', arr[i]);
-    console.log('window add', window_add);
-    window_add = window_add - arr[i-w] + arr[i];
-    console.log('window add ---- ', window_add);
-    max_suma = Math.max(max_suma,window_add);
+  for (let i = 0; i < length; i++) {
+    winAdd += arr[i]
+
+    if ((i-start + 1) == window) {
+      max = Math.max(max, winAdd);
+      winAdd -= arr[start]
+      start += 1
+    }
   }
 
-  return max_suma
+  return max
 }
 
-let arr = [ 1, 4, 2, 10, 2, 3, 1, 0, 20 ];
-const w = 4;
-const arr_length = arr.length;
+let arr = [1, 4, 2, 10, 23, 3, 1, 0, 20]
+let window = 4;
+let { length } = arr;
 
-maxSuma(arr, w, arr_length);
+console.log(maxSum(arr,window, length));
